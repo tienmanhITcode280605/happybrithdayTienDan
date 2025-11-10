@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Album</title>
+    <link rel="stylesheet" href="style4.css" />
+  </head>
+  <body>
+    <div class="bubble pink"></div>
+    <div class="bubble light"></div>
+    <div class="bubble deep"></div>
+    <div class="bubble tiny"></div>
+    <div class="bubble blue"></div>
+    <div class="bubble yellow"></div>
+    <div class="bubble green"></div>
+    <div class="bubble orange"></div>
+    <div class="bubble purple"></div>
+    <div class="bubble red"></div>
+    <div class="bubble big"></div>
+    <div class="bubble mid"></div>
+    <div class="bubble small"></div>
+    <button
+      id="backToHome"
+      style="
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        z-index: 2000;
+        background: rgba(255, 182, 193, 0.25);
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+      "
+    >
+      ←
+    </button>
+    <div class="floating-hearts"></div>
+
+    <div class="container">
+      <div class="decorative-corner corner-1"></div>
+      <div class="decorative-corner corner-2"></div>
+
+      <div class="message-header">Happy Birthday</div>
+
+      <div class="greeting">
+        Gửi Đann
+        <span class="greeting-emoticon">💖 .................... 💖</span>
+      </div>
+
+      <div
+        class="message-content"
+        style="
+          background: linear-gradient(135deg, #fff0f6, #fce4ec);
+          border: 2px solid #ffb3c6;
+          box-shadow: 0 4px 24px rgba(255, 182, 193, 0.15);
+        "
+      >
+        <p
+          style="
+            font-size: 17px;
+            color: #d72660;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 18px;
+          "
+        >
+          "Anh cảm ơn em vì đã đến bên anh, làm cho thế giới của anh trở nên rực
+          rỡ và đầy ý nghĩa."
+        </p>
+        <p>
+          Mỗi ngày bên em là một ngày thật đặc biệt. Anh yêu cách em cười, cách
+          em quan tâm, và cả những lúc em giận dỗi thật dễ thương. Anh biết, dù
+          cuộc sống có lúc khó khăn, chỉ cần có em bên cạnh, mọi thứ đều trở nên
+          nhẹ nhàng hơn.
+        </p>
+        <p>
+          Anh mong rằng những kỷ niệm của chúng ta sẽ mãi là nguồn động lực để
+          cả hai cùng cố gắng, cùng trưởng thành và cùng hạnh phúc. Anh sẽ luôn
+          ở đây, lắng nghe, chia sẻ và yêu thương em bằng tất cả trái tim mình.
+        </p>
+        <p
+          style="
+            margin-top: 24px;
+            text-align: right;
+            font-style: italic;
+            color: #c44569;
+            font-size: 16px;
+          "
+        >
+          Yêu em nhiều lắm,<br />
+          <span
+            style="
+              font-family: 'Dancing Script', cursive;
+              font-size: 22px;
+              color: #d72660;
+            "
+            >Anh</span
+          >
+        </p>
+        <div style="text-align: center; margin-top: 18px">
+          <span style="font-size: 24px; color: #ff6b9d">♡ ♡ ♡</span>
+        </div>
+      </div>
+
+      <button class="send-button" onclick="sendMessage()">Đồng ý</button>
+    </div>
+    <audio id="myAudio">
+      <source src="image/vạn vật như muốn ta bên nhau.mp3" type="audio/mp3" />
+    </audio>
+    <script src="lang4.js"></script>
+  </body>
+</html>

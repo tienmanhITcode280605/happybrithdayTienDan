@@ -1,0 +1,148 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('image/nen.jpg');
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: none;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #baafe1;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #151414;
+            margin-bottom: 30px;
+        }
+
+        .pin-display {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .pin-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .pin-dot.filled {
+            background: white;
+            border-color: #f1ecea;
+            transform: scale(1.2);
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            color: whitesmoke;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+
+        .key {
+            width: 70px;
+            height: 70px;
+            border-radius: 50% !important;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.18);
+            font-size: 24px;
+            font-weight: 600;
+            color: #888787;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .key:hover {
+            background: rgba(255,255,255,0.32);
+            border-color: rgba(255,255,255,0.5);
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .key:active {
+            transform: scale(0.95);
+            background: rgba(255,255,255,0.45);
+            border-color: rgba(255,255,255,0.7);
+        }
+
+
+        .key.delete {
+            color: #888787;
+            font-size: 22px;
+            box-shadow: 0 4px 16px #ff6b6b40;
+        }
+
+
+        .key.enter {
+            font-size: 28px;
+            font-weight: bold;
+            color: #888787;
+        }
+        @keyframes shake {
+            0%, 20%, 40%, 60%, 80% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .key {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+            
+            .keypad {
+                gap: 15px;
+                max-width: 240px;
+            }
+        }

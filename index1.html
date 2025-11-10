@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="menu-overlay" id="overlay"></div>
+    <main>
+      <div class="photo-container">
+        <img id="photo" class="main-photo" src="image/thaidan1.jpg" alt="Ảnh" />
+      </div>
+      <div class="action-row">
+        <button class="action-btn" id="likeBtn" aria-label="Thả tim">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5A4.5 4.5 0 0 1 7.5 4a5.5 5.5 0 0 1 4.5 2.09A5.5 5.5 0 0 1 16.5 4 4.5 4.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54Z"/></svg>
+        </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('likeBtn').onclick = function() {
+              localStorage.setItem('autoPlayMusic', '1');
+              window.location.href = 'index4.html';
+            };
+          });
+        </script>
+        </button>
+        <button class="action-btn" aria-label="Ảnh">
+          <svg viewBox="0 0 24 24"><path d="M21 6h-2l-2.59-2.59A2 2 0 0 0 14 3H10a2 2 0 0 0-1.41.59L6 6H5A3 3 0 0 0 2 9v7a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3Z"/></svg>
+        </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.action-btn[aria-label="Ảnh"]').onclick = function() {
+              localStorage.setItem('autoPlayMusic', '1');
+              window.location.href = 'index2.html';
+            };
+            document.getElementById('videoBtn').onclick = function() {
+              window.location.href = 'index3.html';
+            };
+          });
+        </script>
+         <button class="action-btn" aria-label="Video" id="videoBtn" style="margin-left:8px;">
+           <svg viewBox="0 0 24 24" width="24" height="24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4z"/></svg>
+         </button>
+      </div>
+      <div class="stats fancy-stats">
+  <div class="user">
+    <div class="avatar-border">
+      <img class="avatar" src="image/thaidan2.jpg" alt="" />
+    </div>
+    <div class="name">Me</div>
+  </div>
+  <div class="likes">
+    <div class="likes-count heart-beat">
+      <span id="daysCount" class="date heart-beat" style="font-size:36px;color:#e06c9f;font-weight:800;text-shadow:0 2px 8px #fbb1d280">0</span>
+      <div class="likes-text heart-beat" style="font-size:16px;color:#ca899f;font-weight:600;letter-spacing:1px;">ngày bên nhau</div>
+    </div>
+  </div>
+  <div class="user">
+    <div class="avatar-border">
+      <img class="avatar" src="image/thaidan1.jpg" alt="" />
+    </div>
+    <div class="name">You</div>
+  </div>
+</div>
+    </main>
+    <audio id="myAudio">
+            <source src="img/ST.mp3" type="audio/mp3">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
+        </audio>
+
+  </div>
+  <script>
+  const startDate = new Date("2025-08-11T00:00:00");
+  function updateDaysTogether() {
+    const el = document.getElementById("daysCount");
+    if (!el) return;
+    const now   = new Date();
+    const diff  = now - startDate;
+    const days  = Math.floor(diff / 86400000);
+    el.textContent = days;
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    updateDaysTogether();
+    setInterval(updateDaysTogether, 60000);
+  });
+    document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('autoPlayMusic') === '1') {
+      var audio = document.getElementById('myAudio');
+      if (audio) {
+        // Thử phát tự động
+        audio.play().catch(() => {
+          // Nếu bị chặn, đợi người dùng click/chạm để phát
+          function playMusicOnce() {
+            if (audio.paused) audio.play().catch(()=>{});
+            document.body.removeEventListener('touchstart', playMusicOnce);
+            document.body.removeEventListener('mousedown', playMusicOnce);
+            localStorage.removeItem('autoPlayMusic');
+          }
+          document.body.addEventListener('touchstart', playMusicOnce);
+          document.body.addEventListener('mousedown', playMusicOnce);
+        });
+      } else {
+        localStorage.removeItem('autoPlayMusic');
+      }
+    }
+  });
+</script>
+
+  <script src="lang1.js"></script>
+</body>
+</html>

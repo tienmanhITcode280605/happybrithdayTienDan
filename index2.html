@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Album</title>
+    <link rel="stylesheet" href="style2.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <h1>" Bạch Nguyệt Đan "</h1>
+      </div>
+      <div class="gallery-container">
+        <div class="photo-grid" id="photoGrid">
+          <div class="photo-item">
+            <img src="image/thaidan2.jpg" alt="" />
+          </div>
+          <div class="photo-item wide">
+            <img src="image/thaidan1.jpg" alt="" />
+          </div>
+          <div class="photo-item tall">
+            <img src="image/thaidan2.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan3.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan4.jpg" alt="" />
+          </div>
+          <div class="photo-item large">
+            <img src="image/thaidan5.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan2.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan3.jpg" alt="" />
+          </div>
+          <div class="photo-item wide">
+            <img src="image/thaidan4.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan1.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan5.jpg" alt="" />
+          </div>
+          <div class="photo-item tall">
+            <img src="image/thaidan3.jpg" alt="" />
+          </div>
+          <div class="photo-item wide">
+            <img src="image/thaidan4.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan2.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan5.jpg" alt="" />
+          </div>
+          <div class="photo-item">
+            <img src="image/thaidan2.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nút quay lại -->
+    <button
+      id="backToHome"
+      style="
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        z-index: 2000;
+        background: rgba(255, 255, 255, 0.25);
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+      "
+    >
+      ←
+    </button>
+
+    <!-- Modal xem ảnh -->
+    <div id="photoModal" class="photo-modal">
+      <div class="photo-modal-content">
+        <button
+          id="prevPhotoBtn"
+          class="photo-nav-btn"
+          style="
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            font-size: 32px;
+            background: #ecacc2;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            z-index: 2;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          &#8592;
+        </button>
+
+        <img
+          id="modalPhoto"
+          src=""
+          alt="Ảnh kỷ niệm"
+          class="modal-img-beauty"
+          style="
+            max-width: 90vw;
+            max-height: 80vh;
+            display: block;
+            margin: auto;
+          "
+        />
+
+        <button
+          id="nextPhotoBtn"
+          class="photo-nav-btn"
+          style="
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            font-size: 32px;
+            background: #ecacc2;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            z-index: 2;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          &#8594;
+        </button>
+
+        <div
+          id="modalDate"
+          style="
+            text-align: center;
+            margin-top: 10px;
+            color: #d72660;
+            font-weight: 600;
+          "
+        ></div>
+      </div>
+    </div>
+
+    <!-- Nhạc nền -->
+    <audio id="myAudio" autoplay loop>
+      <source src="image/vanvatnhumuontabenhau.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      // Nút quay lại trang trước
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("backToHome").onclick = function () {
+          window.location.href = "index1.html";
+        };
+      });
+
+      // Phát nhạc khi người dùng bấm vào trang (chống chặn autoplay)
+      document.body.addEventListener(
+        "click",
+        function () {
+          const audio = document.getElementById("myAudio");
+          audio.play().catch(() => {});
+        },
+        { once: true }
+      );
+    </script>
+
+    <!-- Script riêng -->
+    <script src="lang2.js"></script>
+  </body>
+</html>
