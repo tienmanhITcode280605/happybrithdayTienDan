@@ -71,7 +71,7 @@
                 document.addEventListener('DOMContentLoaded', function() {
                     createFloatingHearts();
                     document.getElementById('backToHome').onclick = function() {
-                        window.location.href = 'index1.html';
+                        window.location.href = 'index10.html';
                     };
 
                     var audio = document.getElementById('myAudio');

@@ -21,7 +21,7 @@ function toggleMenu() {
         document.querySelector('.screen').style.transform = 'translateX(-100%)';
         document.querySelector('.screen').style.transition = 'transform 0.3s ease';
         setTimeout(() => {
-          window.location.href = 'index2.html';
+          window.location.href = 'index20.html';
         }, 300);
         return;
       }

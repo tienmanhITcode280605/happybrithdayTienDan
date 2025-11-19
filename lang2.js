@@ -43,7 +43,7 @@
 
         // Go back function
         function goBack() {
-            window.location.href = 'index1.html';
+            window.location.href = 'index10.html';
         }
 
         // Save photos to localStorage

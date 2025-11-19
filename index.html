@@ -1,46 +1,358 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Album</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bộ Đếm Ngược Hacker - Màn Hình Khóa</title>
+
+    <!-- Sử dụng font Share Tech Mono cho phong cách hacker -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* === STYLES CHUNG === */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #020f01;
+        overflow: hidden;
+        font-family: "Share Tech Mono", monospace;
+      }
+      canvas {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+      }
+
+      /* Overlay - Phần hiển thị chính */
+      .overlay {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #00ff00;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+        padding: 10px;
+        text-align: center;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        letter-spacing: 6px;
+        color: #00ff00;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+      }
+
+      /* === KHỐI ĐẾM NGƯỢC === */
+      .count {
+        display: flex;
+        gap: clamp(10px, 4vw, 20px);
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .block {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 15px 20px;
+        border: 2px solid #00ff00;
+        border-radius: 5px;
+        min-width: 70px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      }
+
+      .num {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+        font-weight: bold;
+        color: #ccff99;
+        letter-spacing: 1px;
+      }
+
+      .label {
+        margin-top: 5px;
+        font-size: 0.8rem;
+        opacity: 0.9;
+        color: #00ff00;
+      }
+
+      /* === KHU VỰC MẬT KHẨU === */
+      #passwordArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 350px;
+        margin-top: 20px;
+      }
+
+      #passwordInput {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid #00ff00;
+        color: #ccff99;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 1rem;
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        outline: none;
+      }
+
+      #passwordInput::placeholder {
+        color: rgba(0, 255, 0, 0.5);
+      }
+
+      #unlockButton {
+        width: 100%;
+        padding: 12px;
+        background: #00ff00;
+        color: #020f01;
+        border: none;
+        cursor: pointer;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: background 0.3s, box-shadow 0.3s;
+      }
+
+      #unlockButton:hover {
+        background: #ccff99;
+        box-shadow: 0 0 15px #ccff99;
+      }
+
+      #errorMsg {
+        min-height: 1.2rem;
+        color: #ff0000; /* Màu đỏ cho thông báo lỗi */
+        font-size: 0.85rem;
+        margin-top: 10px;
+        text-shadow: none;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <h2 class="title" style="color: #02171c">Chào "Tiên Đan"</h2>
-      <p class="subtitle" style="color: rgb(15, 15, 14)">
-        cần gợi ý thì nhắn tin cho mình nha ^^
-      </p>
+    <canvas id="c"></canvas>
 
-      <div class="pin-display" id="pinDisplay">
-        <div class="pin-dot"></div>
-        <div class="pin-dot"></div>
-        <div class="pin-dot"></div>
-        <div class="pin-dot"></div>
-      </div>
-      <div class="keypad">
-        <button class="key" onclick="addDigit('1')">1</button>
-        <button class="key" onclick="addDigit('2')">2</button>
-        <button class="key" onclick="addDigit('3')">3</button>
+    <div class="overlay">
+      <!-- Màn hình Khóa -->
+      <div id="lockScreen">
+        <h1>|| 06/01/2026 ||</h1>
 
-        <button class="key" onclick="addDigit('4')">4</button>
-        <button class="key" onclick="addDigit('5')">5</button>
-        <button class="key" onclick="addDigit('6')">6</button>
+        <div id="countdown" class="count">
+          <div class="block">
+            <div id="days" class="num">--</div>
+            <div class="label">NGÀY</div>
+          </div>
+          <div class="block">
+            <div id="hours" class="num">--</div>
+            <div class="label">GIỜ</div>
+          </div>
+          <div class="block">
+            <div id="mins" class="num">--</div>
+            <div class="label">PHÚT</div>
+          </div>
+          <div class="block">
+            <div id="secs" class="num">--</div>
+            <div class="label">GIÂY</div>
+          </div>
+        </div>
 
-        <button class="key" onclick="addDigit('7')">7</button>
-        <button class="key" onclick="addDigit('8')">8</button>
-        <button class="key" onclick="addDigit('9')">9</button>
-
-        <button class="key delete" onclick="deleteDigit()">⌫</button>
-        <button class="key" onclick="addDigit('0')">0</button>
-        <button class="key enter" onclick="checkPin()">✓</button>
+        <div id="passwordArea">
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="Nhập Mật Khẩu.........."
+          />
+          <button id="unlockButton">Mở</button>
+          <p id="errorMsg"></p>
+        </div>
       </div>
     </div>
-    <script src="lang.js"></script>
+
+    <script>
+      // =================================================================
+      // === PHẦN LOGIC JAVASCRIPT CHÍNH ===
+      // =================================================================
+
+      // === 1. CẤU HÌNH MẬT KHẨU VÀ NGÀY KẾT THÚC ===
+      const UNLOCK_PASSWORD = "GEMINI2026"; // <-- Mật khẩu chính xác!
+      const REDIRECT_URL = "index.html"; // <-- Trang đích chuyển hướng
+      // Đặt ngày/giờ kết thúc đếm ngược (06/01/2026 00:00:00 theo múi giờ Việt Nam +07:00)
+      const unlockDate = new Date("2026-01-06T00:00:00+07:00").getTime();
+
+      // === 2. ĐỊNH NGHĨA CÁC PHẦN TỬ HTML ===
+      const passwordInput = document.getElementById("passwordInput");
+      const unlockButton = document.getElementById("unlockButton");
+      const errorMsgEl = document.getElementById("errorMsg");
+      const dEl = document.getElementById("days");
+      const hEl = document.getElementById("hours");
+      const mEl = document.getElementById("mins");
+      const sEl = document.getElementById("secs");
+      let timer; // Biến giữ ID của setInterval
+
+      // === 3. HÀM CHUYỂN HƯỚNG VÀ MỞ KHÓA ===
+      // Hàm này được gọi trong cả hai trường hợp: nhập đúng mật khẩu HOẶC đếm ngược về 0.
+      function showUnlockedScreen(reason) {
+        // Dừng bộ đếm ngược để tránh lãng phí tài nguyên
+        if (timer) clearInterval(timer);
+        console.log(
+          `[ACCESS GRANTED] Reason: ${reason}. Redirecting to ${REDIRECT_URL}`
+        );
+
+        // LỆNH CHUYỂN HƯỚNG ĐẾN index.html (Dòng này)
+        window.location.href = REDIRECT_URL;
+      }
+
+      // === 4. LOGIC XỬ LÝ MẬT KHẨU ===
+      const R = "index1.html";
+      function attemptUnlock() {
+        const input = passwordInput.value.toLowerCase().trim();
+        const password = "xinhvaychaclacobikiprieng".toLowerCase(); // chuẩn hóa chữ thường
+
+        if (input === password) {
+          window.location.href = R; // chuyển trang
+        } else {
+          errorMsgEl.textContent = " Mật khẩu không chính xác. Thử lại.";
+          passwordInput.value = "";
+          passwordInput.focus();
+
+          setTimeout(() => {
+            errorMsgEl.textContent = "";
+          }, 3000);
+        }
+      }
+
+      // Gán sự kiện cho nút Mở khóa và phím Enter
+      unlockButton.addEventListener("click", attemptUnlock);
+      passwordInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          attemptUnlock();
+        }
+      });
+
+      // === 5. LOGIC BỘ ĐẾM NGƯỢC THỜI GIAN ===
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = unlockDate - now;
+
+        if (diff > 0) {
+          // Đang đếm ngược
+          const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const h = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+          dEl.textContent = String(d).padStart(2, "0");
+          hEl.textContent = String(h).padStart(2, "0");
+          mEl.textContent = String(m).padStart(2, "0");
+          sEl.textContent = String(s).padStart(2, "0");
+        } else {
+          // KỊCH BẢN 2: Đếm ngược hoàn tất => Tự động chuyển hướng
+          dEl.textContent = "00";
+          hEl.textContent = "00";
+          mEl.textContent = "00";
+          sEl.textContent = "00";
+          showUnlockedScreen("Countdown Finished");
+        }
+      }
+
+      // Bắt đầu bộ đếm ngược
+      timer = setInterval(updateCountdown, 1000);
+
+      // Kiểm tra ngay lập tức khi tải trang (phòng trường hợp ngày đã qua)
+      if (unlockDate < Date.now()) {
+        showUnlockedScreen("Countdown Finished");
+      }
+
+      // =================================================================
+      // === PHẦN HIỆU ỨNG MATRIX RAIN MÀN HÌNH XANH (CHẠY NỀN) ===
+      // =================================================================
+      const canvas = document.getElementById("c");
+      const ctx = canvas.getContext("2d");
+
+      const binaryChars = ["0", "1"];
+      let fontSize = 16;
+      let drops = [];
+      let columns;
+
+      function getBinaryChar() {
+        return binaryChars[Math.floor(Math.random() * binaryChars.length)];
+      }
+
+      function initializeDrops() {
+        columns = Math.floor(canvas.width / fontSize);
+        // Khởi tạo vị trí Y ngẫu nhiên cho mỗi cột
+        drops = new Array(columns)
+          .fill(0)
+          .map(() => Math.floor((Math.random() * -canvas.height) / fontSize));
+      }
+
+      function fitCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        // Kích thước font chữ điều chỉnh theo màn hình
+        fontSize = Math.max(12, Math.floor(window.innerWidth / 30));
+        initializeDrops();
+      }
+
+      window.addEventListener("resize", fitCanvas); // Cập nhật khi thay đổi kích thước
+
+      function draw() {
+        // Tạo hiệu ứng đuôi mờ cho mưa Matrix
+        ctx.fillStyle = "rgba(2, 15, 1, 0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const x = i * fontSize;
+          let yHead = drops[i] * fontSize;
+
+          // VẼ ĐẦU DÒNG SÁNG NHẤT
+          ctx.fillStyle = "#00ff00";
+          ctx.fillText(getBinaryChar(), x, yHead);
+
+          // VẼ ĐUÔI XANH LÁ MỜ DẦN
+          const trailLength = 10;
+          for (let j = 1; j <= trailLength; j++) {
+            const yTrail = yHead - j * fontSize;
+            if (yTrail < 0) break;
+
+            const opacity = Math.max(0, 0.7 - j / trailLength);
+            ctx.fillStyle = `rgba(0, 150, 0, ${opacity.toFixed(2)})`;
+            ctx.fillText(getBinaryChar(), x, yTrail);
+          }
+
+          // CẬP NHẬT VỊ TRÍ RƠI CỦA DÒNG
+          drops[i] += Math.random() * 0.5 + 1.5;
+
+          // ĐẶT LẠI DÒNG KHI RƠI HẾT MÀN HÌNH
+          if (
+            yHead > canvas.height + trailLength * fontSize &&
+            Math.random() > 0.95
+          ) {
+            drops[i] = Math.floor((Math.random() * -canvas.height) / fontSize);
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      // Bắt đầu vẽ hiệu ứng Matrix khi trang tải xong
+      window.onload = function () {
+        fitCanvas(); // Đảm bảo canvas được đặt kích thước chính xác
+        draw(); // Bắt đầu animation loop
+      };
+    </script>
   </body>
 </html>

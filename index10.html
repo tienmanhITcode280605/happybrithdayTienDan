@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="menu-overlay" id="overlay"></div>
+    <main>
+      <div class="photo-container">
+        <img id="photo" class="main-photo" src="image/thaidan6.jpg" alt="Ảnh" />
+      </div>
+      <div class="action-row">
+        <button class="action-btn" id="likeBtn" aria-label="Thả tim">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5A4.5 4.5 0 0 1 7.5 4a5.5 5.5 0 0 1 4.5 2.09A5.5 5.5 0 0 1 16.5 4 4.5 4.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54Z"/></svg>
+        </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('likeBtn').onclick = function() {
+              localStorage.setItem('autoPlayMusic', '1');
+              window.location.href = 'index40.html';
+            };
+          });
+        </script>
+        </button>
+        <button class="action-btn" aria-label="Ảnh">
+          <svg viewBox="0 0 24 24"><path d="M21 6h-2l-2.59-2.59A2 2 0 0 0 14 3H10a2 2 0 0 0-1.41.59L6 6H5A3 3 0 0 0 2 9v7a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3Z"/></svg>
+        </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.action-btn[aria-label="Ảnh"]').onclick = function() {
+              localStorage.setItem('autoPlayMusic', '1');
+              window.location.href = 'index20.html';
+            };
+          });
+        </script>
+      </div>
+      <div class="stats fancy-stats">
+  <div class="user">
+    <div class="avatar-border">
+      <img class="avatar" src="image/thaidan9.jpg" alt="" />
+    </div>
+    <div class="name">💗Tiên💗</div>
+  </div>
+  <div class="likes">
+    <div class="likes-count heart-beat">
+      <span id="daysCount" class="date heart-beat" style="font-size:36px;color:#e06c9f;font-weight:800;text-shadow:0 2px 8px #fbb1d280">0</span>
+      <div class="likes-text heart-beat" style="font-size:16px;color:#ca899f;font-weight:600;letter-spacing:1px;">🍀ngày tuổi🍀 </div>
+    </div>
+  </div>
+  <div class="user">
+    <div class="avatar-border">
+      <img class="avatar" src="image/thaidan2.jpg" alt="" />
+    </div>
+    <div class="name">'💗Đan💗</div>
+  </div>
+</div>
+    </main>
+    <audio id="myAudio">
+            <source src="img/ST.mp3" type="audio/mp3">
+
+        </audio>
+
+  </div>
+  <script>
+  // Ngày bắt đầu: 06/01/2008
+const startDate = new Date("2008-01-06T00:00:00");
+
+function updateDaysSinceStart() {
+  const now = new Date(); // thời điểm hiện tại
+  const diff = now - startDate; // số milliseconds đã trôi qua
+  const days = Math.floor(diff / 86400000); // chia cho 1 ngày (ms)
+  document.getElementById("daysCount").textContent = days;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateDaysSinceStart();
+  setInterval(updateDaysSinceStart, 60000); // cập nhật mỗi phút
+});
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateDaysTogether();
+    setInterval(updateDaysTogether, 60000);
+  });
+    document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('autoPlayMusic') === '1') {
+      var audio = document.getElementById('myAudio');
+      if (audio) {
+        // Thử phát tự động
+        audio.play().catch(() => {
+          // Nếu bị chặn, đợi người dùng click/chạm để phát
+          function playMusicOnce() {
+            if (audio.paused) audio.play().catch(()=>{});
+            document.body.removeEventListener('touchstart', playMusicOnce);
+            document.body.removeEventListener('mousedown', playMusicOnce);
+            localStorage.removeItem('autoPlayMusic');
+          }
+          document.body.addEventListener('touchstart', playMusicOnce);
+          document.body.addEventListener('mousedown', playMusicOnce);
+        });
+      } else {
+        localStorage.removeItem('autoPlayMusic');
+      }
+    }
+  });
+</script>
+  
+  <script src="lang1.js"></script>
+  <script>
+    function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-fly");
+
+    // mảng nhiều emoji tim
+    const heartEmojis = ["💗","💖","💘","❤️","💞","💕","💝"];
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+    // vị trí ngang ngẫu nhiên
+    heart.style.left = Math.random() * window.innerWidth + "px";
+
+    // kích thước ngẫu nhiên
+    heart.style.fontSize = (20 + Math.random() * 30) + "px";
+
+    // tốc độ rơi ngẫu nhiên
+    const duration = 3 + Math.random() * 4; // từ 3s đến 7s
+    heart.style.animationDuration = duration + "s";
+
+    document.body.appendChild(heart);
+
+    // xóa tim sau khi rơi
+    setTimeout(() => {
+        heart.remove();
+    }, duration * 1000);
+}
+
+// tạo nhiều tim liên tục mỗi 100ms
+setInterval(createHeart, 100);
+
+  </script>
+</body>
+
+
+</html>
